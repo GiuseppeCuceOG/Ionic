@@ -22,7 +22,8 @@ export class MenuPage implements OnInit {
   dishes: Dish[];
   errMess: string;
 
-  constructor(public navCtrl: NavController,
+  constructor(
+  	public navCtrl: NavController,
   	public navParams: NavParams,
   	private dishservice: DishProvider,
   	private favoriteservice: FavoriteProvider,

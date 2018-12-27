@@ -23,7 +23,7 @@ export class FavoriteProvider {
   }
 
   addFavorite(id: number): boolean {
-  	if(!this.isFavorite(id))
+  	if(!this.isFavorite(id)) 
   		this.favorites.push(id);
   	return true;
   }
