@@ -1,7 +1,8 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, ActionSheetController, ModalController } from 'ionic-angular';
 import { Dish } from '../../shared/dish';
 import { Comment } from '../../shared/comment';
+import { CommentPage } from '../comment/comment';
 import { FavoriteProvider } from '../../providers/favorite/favorite';
 
 /**
@@ -19,6 +20,7 @@ import { FavoriteProvider } from '../../providers/favorite/favorite';
 export class DishdetailPage {
   
   dish: Dish;
+  comment: Comment;
   errMess: string;
   avgstars: string;
   numcomments: number;
@@ -26,14 +28,15 @@ export class DishdetailPage {
 
   constructor(public navCtrl: NavController,
   	public navParams: NavParams,
+  	private actionCtrl: ActionSheetController,
   	@Inject('BaseURL') private BaseURL,
   	private favoriteservice: FavoriteProvider,
-  	private toastCtrl: ToastController) {
+  	private toastCtrl: ToastController,
+  	private modalCtrl: ModalController) {
 
   	this.dish = navParams.get('dish');
   	this.favorite = this.favoriteservice.isFavorite(this.dish.id);
   	this.numcomments = this.dish.comments.length;
-
   	let total = 0;
   	this.dish.comments.forEach(comment => total += comment.rating);
   	this.avgstars = (total/this.numcomments).toFixed(2);
@@ -51,6 +54,46 @@ export class DishdetailPage {
   		position: 'middle',
   		duration: 3000
   	}).present();
+  }
+
+  openComment() {
+    let modal = this.modalCtrl.create(CommentPage);
+    modal.onDidDismiss(comment => this.insertComment(comment));
+    modal.present();
+  }
+
+  insertComment(comment: Comment) {
+    this.comment = comment;    
+    this.comment.date = new Date().toISOString();
+    this.dish.comments.push(this.comment);
+  }
+
+  triggerActionSheets() {
+  	const actionSheet = this.actionCtrl.create({
+  		title: 'Select Actions',
+  		buttons: [
+  			{
+  				text: 'Add to Favorites',
+  				handler: () => {
+  					this.addToFavorites();
+  				}
+  			},
+  			{
+  				text: 'Add your Comment',
+  				handler: () => {
+  					this.openComment();
+  				}
+  			},
+  			{
+  				text: 'Cancel',
+  				role: 'cancel',
+  				handler: () => {
+  					console.log('Cancel clicked');
+  				}
+  			}
+  		]
+  	});
+  	actionSheet.present();
   }
 
 }

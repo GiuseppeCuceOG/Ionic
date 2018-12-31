@@ -9,6 +9,7 @@ import { MenuPage } from '../pages/menu/menu';
 import { ContactPage } from '../pages/contact/contact';
 import { FavoritesPage } from '../pages/favorites/favorites';
 import { ReservationPage } from '../pages/reservation/reservation';
+import { CommentPage } from '../pages/comment/comment';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class MyApp {
       { title: 'About Us', icon: 'information-circle', component: AboutPage },
       { title: 'Menu', icon: 'list-box', component: MenuPage },
       { title: 'Contact Us', icon: 'contact', component: ContactPage },
-      { title: 'My Favorites', icon: 'heart', component: FavoritesPage }   ];
+      { title: 'My Favorites', icon: 'heart', component: FavoritesPage }  ];
 
   }
 
