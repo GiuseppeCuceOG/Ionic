@@ -39,8 +39,8 @@ export class LoginPage {
   			this.loginForm
   				.patchValue({
   					'username': this.user.username,
-  					'passwrod': this.user.password
-  				})
+  					'password': this.user.password
+  				});
   		}
   		else {
   			console.log('user not defined');
